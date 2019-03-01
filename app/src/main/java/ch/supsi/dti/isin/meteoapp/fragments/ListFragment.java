@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ch.supsi.dti.isin.meteoapp.R;
@@ -25,12 +26,23 @@ public class ListFragment extends Fragment {
     private RecyclerView mLocationRecyclerView;
     private LocationAdapter mAdapter;
 
+    private Location realPosition;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
 
+    public static ListFragment newInstance(Location realPosition)
+    {
+        Bundle args = new Bundle();
+        //args.putSerializable("realPosition", realPosition);
+        ListFragment fragment = new ListFragment();
+        fragment.realPosition = realPosition;
+
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,7 +50,12 @@ public class ListFragment extends Fragment {
         mLocationRecyclerView = view.findViewById(R.id.recycler_view);
         mLocationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        //Location realPosition = new Location();
+        //realPosition.setName("Posizione attuale");
+
         List<Location> locations = LocationsHolder.get(getActivity()).getLocations();
+        locations.add(0, realPosition);
+
         mAdapter = new LocationAdapter(locations);
         mLocationRecyclerView.setAdapter(mAdapter);
 
