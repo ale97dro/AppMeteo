@@ -29,6 +29,7 @@ public class MainActivity extends SingleFragmentActivity {
 
     private static final String TAG = "AppMeteo";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

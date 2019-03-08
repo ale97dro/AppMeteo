@@ -1,10 +1,14 @@
 package ch.supsi.dti.isin.meteoapp.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,13 +23,14 @@ import java.util.List;
 
 import ch.supsi.dti.isin.meteoapp.R;
 import ch.supsi.dti.isin.meteoapp.activities.DetailActivity;
+import ch.supsi.dti.isin.meteoapp.dialog.PositionPickerDialog;
 import ch.supsi.dti.isin.meteoapp.model.LocationsHolder;
 import ch.supsi.dti.isin.meteoapp.model.Location;
 
 public class ListFragment extends Fragment {
     private RecyclerView mLocationRecyclerView;
     private LocationAdapter mAdapter;
-
+    private List<Location> locations;
     private Location realPosition;
 
     @Override
@@ -49,11 +54,10 @@ public class ListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         mLocationRecyclerView = view.findViewById(R.id.recycler_view);
         mLocationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         //Location realPosition = new Location();
         //realPosition.setName("Posizione attuale");
 
-        List<Location> locations = LocationsHolder.get(getActivity()).getLocations();
+        locations = LocationsHolder.get(getActivity()).getLocations();
         locations.add(0, realPosition);
 
         mAdapter = new LocationAdapter(locations);
@@ -70,6 +74,13 @@ public class ListFragment extends Fragment {
         inflater.inflate(R.menu.fragment_list, menu);
     }
 
+    public void displayDialogPlace(){
+        FragmentManager fragmentManager=getFragmentManager();
+        PositionPickerDialog dialog=new PositionPickerDialog();
+        dialog.setTargetFragment(ListFragment.this,0);
+        dialog.show(fragmentManager,"dialog_tag");
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -78,12 +89,25 @@ public class ListFragment extends Fragment {
                         "Add a location",
                         Toast.LENGTH_SHORT);
                 toast.show();
+                displayDialogPlace();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK)
+            return;
+        if (requestCode == 0) {
+            String place = (String) data.getSerializableExtra("return_place");
+            Log.d("ListFragment",place + "sono li");
+            Location temp=new Location();
+            temp.setName(place);
+            locations.add(temp);
+            //TODO mettere nella lista della location
+        }
+    }
     // Holder
 
     private class LocationHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
