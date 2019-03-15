@@ -6,6 +6,16 @@ public class Location {
     private UUID Id;
     private String mName;
 
+    public Location(String name) {
+        Id = UUID.randomUUID();
+        this.mName = name;
+    }
+
+    public Location(UUID id, String name) {
+        this.Id = id;
+        this.mName = name;
+    }
+
     public UUID getId() {
         return Id;
     }
