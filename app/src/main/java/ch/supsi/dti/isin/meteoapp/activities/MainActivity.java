@@ -47,8 +47,8 @@ public class MainActivity extends SingleFragmentActivity {
         Context context = getApplicationContext();
         mDatabase = new MeteoHelper(context).getWritableDatabase();
 
-        insertData();
-        readData();
+        //insertData(); // se attivo, ad ogni avvio inserisce una location in db
+        //readData(); // se attivo, legge tutte le locations in db e all'avvio appare un toast
 
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Log.i(TAG, "Permission not granted");
@@ -61,12 +61,14 @@ public class MainActivity extends SingleFragmentActivity {
         mDatabase.close();
     }
 
+    // Insert a new location to db
     private void insertData() {
         ch.supsi.dti.isin.meteoapp.model.Location location = new ch.supsi.dti.isin.meteoapp.model.Location("locationName");
         ContentValues values = MeteoContentValues.getContentValues(location);
         mDatabase.insert(MeteoSchema.LocationTable.NAME, null, values);
     }
 
+    // Read locations from db
     private void readData() {
         String res = "Data:";
 
