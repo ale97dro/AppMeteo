@@ -47,8 +47,8 @@ public class MainActivity extends SingleFragmentActivity {
         Context context = getApplicationContext();
         mDatabase = new MeteoHelper(context).getWritableDatabase();
 
-        //insertData(); // se attivo, ad ogni avvio inserisce una location in db
-        //readData(); // se attivo, legge tutte le locations in db e all'avvio appare un toast
+        insertData(); // se attivo, ad ogni avvio inserisce una location in db
+        readData(); // se attivo, legge tutte le locations in db e all'avvio appare un toast
 
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Log.i(TAG, "Permission not granted");
