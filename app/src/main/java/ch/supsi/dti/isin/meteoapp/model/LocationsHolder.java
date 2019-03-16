@@ -49,12 +49,6 @@ public class LocationsHolder {
         } finally {
             cursor.close();
         }
-
-        /*for (int i = 0; i < 10; i++) {
-            Location location = new Location();
-            location.setName("Location # " + i + mLocations.get(i));
-            mLocations.add(location);
-        }*/
     }
 
     public List<Location> getLocations() {

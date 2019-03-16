@@ -10,3 +10,4 @@ public class MeteoSchema {
         }
     }
 }
+//TODO Verificare ulteriori campi necessari da persistere (accuratezza, coordinate, ...)

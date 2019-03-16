@@ -12,13 +12,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.widget.Toast;
-
 import ch.supsi.dti.isin.meteoapp.R;
-import ch.supsi.dti.isin.meteoapp.db.MeteoContentValues;
-import ch.supsi.dti.isin.meteoapp.db.MeteoCursorWrapper;
 import ch.supsi.dti.isin.meteoapp.db.MeteoHelper;
-import ch.supsi.dti.isin.meteoapp.db.MeteoSchema;
 import ch.supsi.dti.isin.meteoapp.fragments.ListFragment;
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
@@ -47,9 +42,6 @@ public class MainActivity extends SingleFragmentActivity {
         Context context = getApplicationContext();
         mDatabase = new MeteoHelper(context).getWritableDatabase();
 
-        insertData(); // se attivo, ad ogni avvio inserisce una location in db
-        readData(); // se attivo, legge tutte le locations in db e all'avvio appare un toast
-
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Log.i(TAG, "Permission not granted");
             requestPermissions();
@@ -59,45 +51,6 @@ public class MainActivity extends SingleFragmentActivity {
         }
 
         mDatabase.close();
-    }
-
-    // Insert a new location to db
-    private void insertData() {
-        ch.supsi.dti.isin.meteoapp.model.Location location = new ch.supsi.dti.isin.meteoapp.model.Location("locationName");
-        ContentValues values = MeteoContentValues.getContentValues(location);
-        mDatabase.insert(MeteoSchema.LocationTable.NAME, null, values);
-    }
-
-    // Read locations from db
-    private void readData() {
-        String res = "Data:";
-
-        MeteoCursorWrapper cursor = queryData(null, null);
-        try {
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()) {
-                ch.supsi.dti.isin.meteoapp.model.Location location = cursor.getLocation();
-                res += "\n" + location.getName();
-                cursor.moveToNext();
-            }
-        } finally {
-            cursor.close();
-        }
-
-        Toast.makeText(this, res, Toast.LENGTH_SHORT).show();
-    }
-
-    private MeteoCursorWrapper queryData(String whereClause, String[] whereArgs) {
-        Cursor cursor = mDatabase.query(
-                MeteoSchema.LocationTable.NAME,
-                null, // columns - null selects all columns
-                whereClause,
-                whereArgs,
-                null, // groupBy
-                null,  // having
-                null  // orderBy
-        );
-        return new MeteoCursorWrapper(cursor);
     }
 
     private void startLocationListener() {
