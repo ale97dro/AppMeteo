@@ -1,7 +1,9 @@
 package ch.supsi.dti.isin.meteoapp.fragments;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -23,6 +25,9 @@ import java.util.List;
 
 import ch.supsi.dti.isin.meteoapp.R;
 import ch.supsi.dti.isin.meteoapp.activities.DetailActivity;
+import ch.supsi.dti.isin.meteoapp.db.MeteoContentValues;
+import ch.supsi.dti.isin.meteoapp.db.MeteoHelper;
+import ch.supsi.dti.isin.meteoapp.db.MeteoSchema;
 import ch.supsi.dti.isin.meteoapp.dialog.PositionPickerDialog;
 import ch.supsi.dti.isin.meteoapp.model.LocationsHolder;
 import ch.supsi.dti.isin.meteoapp.model.Location;
@@ -97,6 +102,7 @@ public class ListFragment extends Fragment {
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        SQLiteDatabase mDatabase = new MeteoHelper(getContext()).getWritableDatabase();
         if (resultCode != Activity.RESULT_OK)
             return;
         if (requestCode == 0) {
@@ -105,7 +111,11 @@ public class ListFragment extends Fragment {
             Location temp=new Location();
             temp.setName(place);
             locations.add(temp);
-            //TODO mettere nella lista della location
+
+            // Inserimento in db e refresh della listview
+            ContentValues values = MeteoContentValues.getContentValues(temp);
+            mDatabase.insert(MeteoSchema.LocationTable.NAME, null, values);
+            mAdapter.notifyDataSetChanged();
         }
     }
     // Holder

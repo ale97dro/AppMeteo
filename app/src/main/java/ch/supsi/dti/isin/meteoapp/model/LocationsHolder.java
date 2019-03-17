@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,6 +28,7 @@ public class LocationsHolder {
     private LocationsHolder(Context context) {
         SQLiteDatabase mDatabase = new MeteoHelper(context).getWritableDatabase();
         mLocations = new ArrayList<>();
+        String sortOrder = MeteoSchema.LocationTable.Cols.NAME + " COLLATE NOCASE ASC";
         Cursor cursor = mDatabase.query(
                 MeteoSchema.LocationTable.NAME,
                 null, // columns - null selects all columns
@@ -34,7 +36,7 @@ public class LocationsHolder {
                 null,
                 null, // groupBy
                 null,  // having
-                null  // orderBy
+                sortOrder  // orderBy
         );
 
         MeteoCursorWrapper meteo = new MeteoCursorWrapper(cursor);

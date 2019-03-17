@@ -43,4 +43,8 @@ public class MeteoHelper extends SQLiteOpenHelper {
             db.insert(MeteoSchema.LocationTable.NAME, null, values);
         }
     }
+
+    public void insertData(SQLiteDatabase db) {
+
+    }
 }
