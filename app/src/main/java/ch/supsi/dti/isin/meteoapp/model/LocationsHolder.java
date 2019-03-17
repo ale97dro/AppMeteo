@@ -28,7 +28,11 @@ public class LocationsHolder {
     private LocationsHolder(Context context) {
         SQLiteDatabase mDatabase = new MeteoHelper(context).getWritableDatabase();
         mLocations = new ArrayList<>();
+
+        // Ordine alfabetico
         String sortOrder = MeteoSchema.LocationTable.Cols.NAME + " COLLATE NOCASE ASC";
+
+        // Database query
         Cursor cursor = mDatabase.query(
                 MeteoSchema.LocationTable.NAME,
                 null, // columns - null selects all columns

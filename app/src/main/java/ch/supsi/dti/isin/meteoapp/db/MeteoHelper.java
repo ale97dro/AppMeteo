@@ -32,7 +32,7 @@ public class MeteoHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
 
-    // Insert a new location to db
+    // Seed con dati iniziali
     private void seedDatabase(SQLiteDatabase db) {
         List<String> places = Arrays.asList("Antalya", "Bangkok", "Delhi", "Dubai", "Guangzhou",
                 "Hong Kong", "Istanbul", "Kuala Lumpur", "Londra", "Macau", "Mumbai", "New York",
@@ -42,9 +42,5 @@ public class MeteoHelper extends SQLiteOpenHelper {
             ContentValues values = MeteoContentValues.getContentValues(location);
             db.insert(MeteoSchema.LocationTable.NAME, null, values);
         }
-    }
-
-    public void insertData(SQLiteDatabase db) {
-
     }
 }
