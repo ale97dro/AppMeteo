@@ -3,11 +3,13 @@ package ch.supsi.dti.isin.meteoapp.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.widget.TextView;
 
 import java.util.UUID;
 
 import ch.supsi.dti.isin.meteoapp.HTTPrequest.MyTask;
 import ch.supsi.dti.isin.meteoapp.HTTPrequest.OnTaskCompleted;
+import ch.supsi.dti.isin.meteoapp.R;
 import ch.supsi.dti.isin.meteoapp.fragments.DetailLocationFragment;
 import ch.supsi.dti.isin.meteoapp.model.Location;
 
@@ -44,14 +46,16 @@ public class DetailActivity extends SingleFragmentActivity implements OnTaskComp
         location.setLongitude((double)getIntent().getSerializableExtra(EXTRA_LOCATION_LONGITUDE));
 
         //creo task per richiesta HTTP
-        MyTask t=new MyTask(DetailActivity.class);
-
+        MyTask t = new MyTask(DetailActivity.this, location);
+        t.execute();
         //return new DetailLocationFragment().newInstance(locationId);
         return new DetailLocationFragment().newInstance(location);
     }
 
     @Override
     public void onTaskCompleted(Location location) {
+        TextView lat = findViewById(R.id.displayedLatitude);
 
+        lat.setText("ciao");
     }
 }

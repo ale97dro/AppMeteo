@@ -9,13 +9,14 @@ public class MyTask extends AsyncTask<Location,Void, Location> {
     private OnTaskCompleted listener;
     private Location location;
 
-    public MyTask(OnTaskCompleted listener) {
+    public MyTask(OnTaskCompleted listener, Location location) {
+        this.location = location;
         this.listener = listener;
     }
 
     @Override
     protected Location doInBackground(Location... locations) {
-        return new TestFetcher().fetchItem(locations[0]);
+        return new TestFetcher().fetchItem(location);
     }
 
     @Override

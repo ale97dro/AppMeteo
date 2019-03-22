@@ -1,7 +1,9 @@
 package ch.supsi.dti.isin.meteoapp.HTTPrequest;
 
 import android.net.Uri;
+import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,8 +17,9 @@ import ch.supsi.dti.isin.meteoapp.model.Location;
 
 class TestFetcher {
 
-    private static final String KEY="";
-    private String getUrlString(String url){
+    private static final String KEY="c28b4f4dae5395d941714f12cba6c3a5";
+
+    private String getUrlString(String url) throws IOException {
         return new String(getUrlBytes(url));
     }
 
@@ -41,7 +44,12 @@ class TestFetcher {
             out.close();
 
             return out.toByteArray();
-        } finally {
+        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+        finally {
             connection.disconnect();
         }
     }
@@ -58,7 +66,7 @@ class TestFetcher {
                         .appendQueryParameter("appid",KEY)
                         .build().toString();
             }catch(Exception e){
-
+                e.printStackTrace();
             }
         }else {
 
@@ -70,7 +78,7 @@ class TestFetcher {
                         .build().toString();
 
             }catch (Exception e){
-
+                e.printStackTrace();
             }
 
         }
@@ -79,13 +87,20 @@ class TestFetcher {
             JSONObject jsonObject = new JSONObject(jsonString);
             parseItem(retLocation, jsonObject);
         }catch(Exception e){
-
+            e.printStackTrace();
         }
         return retLocation;
     }
 
-    private void parseItem(Location location, JSONObject jsonObject)throws IOException, JSONException {
+    private void parseItem(Location location, JSONObject jsonObject)throws IOException, JSONException
+    {
+        JSONObject main = jsonObject.getJSONObject("main");
+        JSONArray weatherArray = jsonObject.getJSONArray("weather");
 
+        final String TAG = "AppMeteo";
+
+        Log.i("main json", main.toString());
+        Log.i("weather Array", weatherArray.toString());
     }
 
 }
