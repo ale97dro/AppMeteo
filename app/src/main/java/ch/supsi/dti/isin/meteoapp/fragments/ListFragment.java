@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,6 +20,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import ch.supsi.dti.isin.meteoapp.R;
@@ -110,9 +113,23 @@ public class ListFragment extends Fragment {
         if (requestCode == 0) {
             String place = (String) data.getSerializableExtra("return_place");
             Log.d("ListFragment",place + "sono li");
-            Location temp=new Location();
+            Location temp=new Location();//location added by dialog
             temp.setName(place);
             locations.add(temp);
+            Location tLocation=locations.remove(0);
+            if(Build.VERSION.SDK_INT >= 24)
+            {
+                locations.sort(new Comparator<Location>() {
+                    @Override
+                    public int compare(Location o1, Location o2) {
+                        String o1Name=o1.getName().toUpperCase();
+                        String o2Name=o2.getName().toUpperCase();
+                        return o1Name.compareTo(o2Name);
+                    }
+                });
+            }
+            locations.add(0,tLocation);
+
 
             // Inserimento in db e refresh della listview
             ContentValues values = MeteoContentValues.getContentValues(temp);
