@@ -26,7 +26,6 @@ public class MainActivity extends SingleFragmentActivity {
 
     @Override
     protected Fragment createFragment() {
-        //return new ListFragment();
         return ListFragment.newInstance(realLocation);
     }
 
@@ -71,11 +70,14 @@ public class MainActivity extends SingleFragmentActivity {
                     @Override
                     public void onLocationUpdated(Location location) {
                         Log.i(TAG, "Location: ciao " + location);
-                        realLocation.setName("prova");
+                        //Set coordinates for the current location
+                        realLocation.setLatitude(location.getLatitude());
+                        realLocation.setLongitude(location.getLongitude());
                     }
                 });
     }
 
+    //Geo-localization permission
     private void requestPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
