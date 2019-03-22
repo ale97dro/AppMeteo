@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ch.supsi.dti.isin.meteoapp.R;
@@ -43,13 +42,15 @@ public class ListFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+    /**
+     * Factory method for ListFragment
+     * @param realPosition it's the user position
+     * @return New fragment
+     */
     public static ListFragment newInstance(Location realPosition)
     {
-        Bundle args = new Bundle();
-        //args.putSerializable("realPosition", realPosition);
         ListFragment fragment = new ListFragment();
-        fragment.realPosition = realPosition;
-
+        fragment.realPosition = realPosition; //set real user position
         return fragment;
     }
 
@@ -58,6 +59,8 @@ public class ListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         mLocationRecyclerView = view.findViewById(R.id.recycler_view);
         mLocationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        realPosition.setName("Your position");
         //Location realPosition = new Location();
         //realPosition.setName("Posizione attuale");
 
@@ -126,12 +129,15 @@ public class ListFragment extends Fragment {
         public LocationHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item, parent, false));
             itemView.setOnClickListener(this);
-            mNameTextView = itemView.findViewById(R.id.name);
+            mNameTextView = itemView.findViewById(R.id.name); //prendo il nome della città dalla lista
+//            latitude = itemView.findViewById(R.id.latitude);
+//            longitude = itemView.findViewById(R.id.longitude);
         }
 
         @Override
         public void onClick(View view) {
-            Intent intent = DetailActivity.newIntent(getActivity(), mLocation.getId());
+            //Intent intent = DetailActivity.newIntent(getActivity(), mLocation.getId()); //original line
+            Intent intent = DetailActivity.newIntent(getActivity(), mLocation);
             startActivity(intent);
         }
 
