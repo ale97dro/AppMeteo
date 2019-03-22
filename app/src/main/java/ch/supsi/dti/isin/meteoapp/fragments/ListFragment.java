@@ -116,15 +116,19 @@ public class ListFragment extends Fragment {
             Location temp=new Location();//location added by dialog
             temp.setName(place);
             locations.add(temp);
+            Location tLocation=locations.remove(0);
             if(Build.VERSION.SDK_INT >= 24)
             {
                 locations.sort(new Comparator<Location>() {
                     @Override
                     public int compare(Location o1, Location o2) {
-                        return o1.getName().compareTo(o2.getName());
+                        String o1Name=o1.getName().toUpperCase();
+                        String o2Name=o2.getName().toUpperCase();
+                        return o1Name.compareTo(o2Name);
                     }
                 });
             }
+            locations.add(0,tLocation);
 
 
             // Inserimento in db e refresh della listview
