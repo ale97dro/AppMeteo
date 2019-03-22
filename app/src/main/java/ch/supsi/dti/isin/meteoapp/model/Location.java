@@ -8,6 +8,24 @@ public class Location implements Serializable {
     private String mName;
     private double latitude;
     private double longitude;
+    private double temperatura;
+    private String status;
+
+    public double getTemperatura() {
+        return temperatura;
+    }
+
+    public void setTemperatura(double temperatura) {
+        this.temperatura = temperatura;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public Location(String name) {
         Id = UUID.randomUUID();
