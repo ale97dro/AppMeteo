@@ -14,9 +14,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import ch.supsi.dti.isin.meteoapp.R;
@@ -54,7 +51,6 @@ public class ListFragment extends Fragment {
         mLocationRecyclerView = view.findViewById(R.id.recycler_view);
         mLocationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        Location realPosition = new Location();
         realPosition.setName("Your position");
 
         List<Location> locations = LocationsHolder.get(getActivity()).getLocations();
@@ -92,6 +88,8 @@ public class ListFragment extends Fragment {
 
     private class LocationHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mNameTextView;
+        private TextView latitude;
+        private TextView longitude;
         private Location mLocation;
 
         //TODO: creare i campi che mi servono in list_item.xml
@@ -99,6 +97,8 @@ public class ListFragment extends Fragment {
             super(inflater.inflate(R.layout.list_item, parent, false));
             itemView.setOnClickListener(this);
             mNameTextView = itemView.findViewById(R.id.name); //prendo il nome della città dalla lista
+//            latitude = itemView.findViewById(R.id.latitude);
+//            longitude = itemView.findViewById(R.id.longitude);
         }
 
         @Override
@@ -111,7 +111,8 @@ public class ListFragment extends Fragment {
         public void bind(Location location) {
             mLocation = location;
             mNameTextView.setText(mLocation.getName());
-
+//            latitude.setText(Double.toString(mLocation.getLatitude()));
+//            longitude.setText(Double.toString(mLocation.getLongitude()));
         }
     }
 
