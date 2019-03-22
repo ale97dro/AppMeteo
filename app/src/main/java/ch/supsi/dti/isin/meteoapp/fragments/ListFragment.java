@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,13 +36,15 @@ public class ListFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+    /**
+     * Factory method for ListFragment
+     * @param realPosition it's the user position
+     * @return New fragment
+     */
     public static ListFragment newInstance(Location realPosition)
     {
-        Bundle args = new Bundle();
-        //args.putSerializable("realPosition", realPosition);
         ListFragment fragment = new ListFragment();
-        fragment.realPosition = realPosition;
-
+        fragment.realPosition = realPosition; //set real user position
         return fragment;
     }
 
@@ -50,8 +54,8 @@ public class ListFragment extends Fragment {
         mLocationRecyclerView = view.findViewById(R.id.recycler_view);
         mLocationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        //Location realPosition = new Location();
-        //realPosition.setName("Posizione attuale");
+        Location realPosition = new Location();
+        realPosition.setName("Your position");
 
         List<Location> locations = LocationsHolder.get(getActivity()).getLocations();
         locations.add(0, realPosition);
@@ -90,21 +94,24 @@ public class ListFragment extends Fragment {
         private TextView mNameTextView;
         private Location mLocation;
 
+        //TODO: creare i campi che mi servono in list_item.xml
         public LocationHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item, parent, false));
             itemView.setOnClickListener(this);
-            mNameTextView = itemView.findViewById(R.id.name);
+            mNameTextView = itemView.findViewById(R.id.name); //prendo il nome della città dalla lista
         }
 
         @Override
         public void onClick(View view) {
-            Intent intent = DetailActivity.newIntent(getActivity(), mLocation.getId());
+            //Intent intent = DetailActivity.newIntent(getActivity(), mLocation.getId()); //original line
+            Intent intent = DetailActivity.newIntent(getActivity(), mLocation);
             startActivity(intent);
         }
 
         public void bind(Location location) {
             mLocation = location;
             mNameTextView.setText(mLocation.getName());
+
         }
     }
 
