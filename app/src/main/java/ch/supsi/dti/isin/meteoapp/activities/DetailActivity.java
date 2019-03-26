@@ -3,6 +3,7 @@ package ch.supsi.dti.isin.meteoapp.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.UUID;
@@ -55,7 +56,52 @@ public class DetailActivity extends SingleFragmentActivity implements OnTaskComp
     @Override
     public void onTaskCompleted(Location location) {
         TextView lat = findViewById(R.id.displayedLatitude);
+        TextView lon = findViewById(R.id.displayedLongitude);
+        TextView temp = findViewById(R.id.displayedTemperature);
+        TextView desc = findViewById(R.id.displayedDescription);
+        String icon=location.getIcon();
 
-        lat.setText("ciao");
+        lat.setText(Double.toString(location.getLatitude()));
+        lon.setText(Double.toString(location.getLongitude()));
+        temp.setText(Double.toString(location.getTemperatura()));
+        desc.setText(location.getStatus());
+
+        ImageView imageView = findViewById(R.id.detailImageView);
+
+        if(icon.equals("01n")) {
+            //clear
+            imageView.setImageResource(R.drawable.moon);
+        }else if(icon.equals("01d")) {
+            //clear
+            imageView.setImageResource(R.drawable.sun);
+        }else if(icon.equals("02n")){
+            //little cloudy with sun
+            imageView.setImageResource(R.drawable.mooncloud);
+        }else if(icon.equals("02d")){
+            //little cloudy with sun
+            imageView.setImageResource(R.drawable.sunnycloud);
+        }else if((icon.equals("03n"))||(icon.equals("03d"))){
+            //cloudy no sun
+            imageView.setImageResource(R.drawable.cloud);
+        }else if((icon.equals("04n"))||(icon.equals("04d"))){
+            //cloud cloud
+            imageView.setImageResource(R.drawable.verycloud);
+        }else if((icon.equals("09n"))||(icon.equals("10n"))||(icon.equals("09d"))||(icon.equals("10d"))){
+            //rain
+            imageView.setImageResource(R.drawable.rainy);
+        }else if((icon.equals("11n"))||(icon.equals("11d"))){
+            //thunder
+            imageView.setImageResource(R.drawable.thunderstorm);
+        }else if((icon.equals("13n"))||(icon.equals("13d"))){
+            //snow
+            imageView.setImageResource(R.drawable.snowing);
+        }else if((icon.equals("50n"))||(icon.equals("50d"))){
+            //foggy
+            imageView.setImageResource(R.drawable.windy);
+        }else{
+            //the rock
+            imageView.setImageResource(R.drawable.therock);
+        }
+
     }
 }

@@ -71,6 +71,8 @@ public class DetailLocationFragment extends Fragment {
         imageView = v.findViewById(R.id.detailImageView);
         imageView.setImageResource(R.drawable.therock);
 
+        //this.getView().setBackground(getResources().getDrawable(Integer.parseInt("drawable/clearSky.jpg")));
+
         return v;
     }
 }

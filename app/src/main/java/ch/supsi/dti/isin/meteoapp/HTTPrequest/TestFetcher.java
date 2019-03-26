@@ -95,10 +95,18 @@ class TestFetcher {
     private void parseItem(Location location, JSONObject jsonObject)throws IOException, JSONException
     {
         JSONObject main = jsonObject.getJSONObject("main");
+        JSONObject coord = jsonObject.getJSONObject("coord");
         JSONArray weatherArray = jsonObject.getJSONArray("weather");
 
-        final String TAG = "AppMeteo";
+        location.setLongitude(coord.getDouble("lon"));
+        location.setLatitude(coord.getDouble("lat"));
+        location.setTemperatura(main.getDouble("temp")-273.15);
+        location.setStatus(weatherArray.getJSONObject(0).getString("description"));
+        location.setIcon(weatherArray.getJSONObject(0).getString("icon"));
 
+        Log.i("weather description", weatherArray.getJSONObject(0).getString("icon"));
+        Log.i("weather description", weatherArray.getJSONObject(0).getString("description"));
+        Log.i("coord json", coord.toString());
         Log.i("main json", main.toString());
         Log.i("weather Array", weatherArray.toString());
     }
