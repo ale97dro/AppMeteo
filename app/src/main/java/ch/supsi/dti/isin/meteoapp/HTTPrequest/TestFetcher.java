@@ -62,7 +62,8 @@ class TestFetcher {
             try {
                 url = Uri.parse("https://api.openweathermap.org/data/2.5/weather")
                         .buildUpon()
-                        .appendQueryParameter("q",location.getName())
+                        .appendQueryParameter("lat",Double.toString(location.getLatitude()))
+                        .appendQueryParameter("lon",Double.toString(location.getLongitude()))
                         .appendQueryParameter("appid",KEY)
                         .build().toString();
             }catch(Exception e){
