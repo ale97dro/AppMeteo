@@ -11,7 +11,7 @@ import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import ch.supsi.dti.isin.meteoapp.HTTPrequest.TestFetcher;
+import ch.supsi.dti.isin.meteoapp.HTTPrequest.MeteoFetcher;
 import ch.supsi.dti.isin.meteoapp.R;
 import ch.supsi.dti.isin.meteoapp.model.Location;
 
@@ -46,8 +46,8 @@ public class MeteoService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Log.i("timerTAG","receved an intent:"+realLocation.getLongitude());
 
-        TestFetcher testFetcher=new TestFetcher();
-        Location locationReturned=testFetcher.fetchItem(realLocation);
+        MeteoFetcher meteoFetcher =new MeteoFetcher();
+        Location locationReturned= meteoFetcher.fetchItem(realLocation);
 
         if(locationReturned.getTemperatura()>=3){
             sendNotification(locationReturned);

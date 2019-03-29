@@ -16,7 +16,7 @@ public class MyTask extends AsyncTask<Location,Void, Location> {
 
     @Override
     protected Location doInBackground(Location... locations) {
-        return new TestFetcher().fetchItem(location);
+        return new MeteoFetcher().fetchItem(location);
     }
 
     @Override

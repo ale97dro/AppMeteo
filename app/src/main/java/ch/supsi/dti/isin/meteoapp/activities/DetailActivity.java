@@ -63,10 +63,16 @@ public class DetailActivity extends SingleFragmentActivity implements OnTaskComp
         String icon=location.getIcon();
         DecimalFormat decimalFormat=new DecimalFormat("#.0");
 
-        lat.setText(Double.toString(location.getLatitude()));
-        lon.setText(Double.toString(location.getLongitude()));
+        lat.setText("Lat: " + Double.toString(location.getLatitude()));
+        lon.setText("Long: " + Double.toString(location.getLongitude()));
         temp.setText(decimalFormat.format(location.getTemperatura())+"°");
-        desc.setText(location.getStatus());
+
+        String locationStatus = location.getStatus();
+
+        locationStatus = Character.toString(Character.toUpperCase(locationStatus.charAt(0))) + locationStatus.substring(1);
+
+        desc.setText(locationStatus);
+        //desc.setText(location.getStatus());
 
         ImageView imageView = findViewById(R.id.detailImageView);
 
