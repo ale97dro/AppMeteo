@@ -47,6 +47,7 @@ public class DetailLocationFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         //UUID locationId = (UUID) getArguments().getSerializable(ARG_LOCATION_ID);
         Location loc = (Location)getArguments().getSerializable(ARG_LOCATION);
         mLocation = LocationsHolder.get(getActivity()).getLocation(loc.getId());
