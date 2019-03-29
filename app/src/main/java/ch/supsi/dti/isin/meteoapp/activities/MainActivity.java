@@ -15,6 +15,7 @@ import android.util.Log;
 import ch.supsi.dti.isin.meteoapp.R;
 import ch.supsi.dti.isin.meteoapp.db.MeteoHelper;
 import ch.supsi.dti.isin.meteoapp.fragments.ListFragment;
+import ch.supsi.dti.isin.meteoapp.service.MeteoService;
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
 import io.nlopez.smartlocation.location.config.LocationAccuracy;
@@ -40,6 +41,8 @@ public class MainActivity extends SingleFragmentActivity {
 
         Context context = getApplicationContext();
         mDatabase = new MeteoHelper(context).getWritableDatabase();
+
+        MeteoService.setServiceAlarm(context,true);
 
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Log.i(TAG, "Permission not granted");

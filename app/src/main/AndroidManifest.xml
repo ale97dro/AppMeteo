@@ -16,6 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.DetailActivity"  android:screenOrientation="portrait"></activity>
+        <service android:name=".service.MeteoService"/>
     </application>
 
 

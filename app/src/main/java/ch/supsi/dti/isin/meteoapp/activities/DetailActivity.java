@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.UUID;
 
 import ch.supsi.dti.isin.meteoapp.HTTPrequest.MyTask;
@@ -60,10 +61,11 @@ public class DetailActivity extends SingleFragmentActivity implements OnTaskComp
         TextView temp = findViewById(R.id.displayedTemperature);
         TextView desc = findViewById(R.id.displayedDescription);
         String icon=location.getIcon();
+        DecimalFormat decimalFormat=new DecimalFormat("#.0");
 
         lat.setText(Double.toString(location.getLatitude()));
         lon.setText(Double.toString(location.getLongitude()));
-        temp.setText(Double.toString(location.getTemperatura()));
+        temp.setText(decimalFormat.format(location.getTemperatura())+"°");
         desc.setText(location.getStatus());
 
         ImageView imageView = findViewById(R.id.detailImageView);
