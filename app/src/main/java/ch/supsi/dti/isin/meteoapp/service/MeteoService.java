@@ -11,7 +11,12 @@ import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import ch.supsi.dti.isin.meteoapp.HTTPrequest.TestFetcher;
+import ch.supsi.dti.isin.meteoapp.R;
+import ch.supsi.dti.isin.meteoapp.model.Location;
+
 public class MeteoService extends IntentService {
+    private static Location realLocation;
 
     public MeteoService()
     {
@@ -22,7 +27,8 @@ public class MeteoService extends IntentService {
         return new Intent(context,MeteoService.class);
     }
 
-    public static void setServiceAlarm(Context context,boolean isOn){
+    public static void setServiceAlarm(Context context, boolean isOn, Location location){
+        realLocation=location;
         Intent i=MeteoService.newIntent(context);
         PendingIntent pendingIntent=PendingIntent.getService(context,0,i,0);
         AlarmManager alarmManager=(AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -35,14 +41,20 @@ public class MeteoService extends IntentService {
         }
     }
 
-    private static int iN=0;
+
     @Override
     protected void onHandleIntent(Intent intent) {
-        Log.i("timerTAG","receved an intent:"+intent);
-        sendNotification(iN++);
+        Log.i("timerTAG","receved an intent:"+realLocation.getLongitude());
+
+        TestFetcher testFetcher=new TestFetcher();
+        Location locationReturned=testFetcher.fetchItem(realLocation);
+
+        if(locationReturned.getTemperatura()>=3){
+            sendNotification(locationReturned);
+        }
     }
 
-    private void sendNotification(int i) {
+    private void sendNotification(Location location) {
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -52,9 +64,9 @@ public class MeteoService extends IntentService {
         }
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "default")
-                .setSmallIcon(android.R.drawable.ic_menu_report_image)
-                .setContentTitle("Title")
-                .setContentText("i: " + i)
+                .setSmallIcon(R.drawable.sun)
+                .setContentTitle("MeteoApp")
+                .setContentText("Temperatura supera i 3°")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         mNotificationManager.notify(0, mBuilder.build());

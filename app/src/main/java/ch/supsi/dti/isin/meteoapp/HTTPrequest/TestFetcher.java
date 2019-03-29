@@ -15,7 +15,7 @@ import java.net.URL;
 
 import ch.supsi.dti.isin.meteoapp.model.Location;
 
-class TestFetcher {
+public class TestFetcher {
 
     private static final String KEY="c28b4f4dae5395d941714f12cba6c3a5";
 

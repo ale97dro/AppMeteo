@@ -42,7 +42,7 @@ public class MainActivity extends SingleFragmentActivity {
         Context context = getApplicationContext();
         mDatabase = new MeteoHelper(context).getWritableDatabase();
 
-        MeteoService.setServiceAlarm(context,true);
+        MeteoService.setServiceAlarm(context,true,realLocation);
 
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Log.i(TAG, "Permission not granted");
