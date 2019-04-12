@@ -49,7 +49,7 @@ public class MeteoService extends IntentService {
         MeteoFetcher meteoFetcher =new MeteoFetcher();
         Location locationReturned= meteoFetcher.fetchItem(realLocation);
 
-        if(locationReturned.getTemperatura()>=3){
+        if(locationReturned.getTemperature()>=3){
             sendNotification(locationReturned);
         }
     }

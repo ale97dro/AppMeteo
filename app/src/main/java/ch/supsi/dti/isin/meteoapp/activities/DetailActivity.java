@@ -65,7 +65,7 @@ public class DetailActivity extends SingleFragmentActivity implements OnTaskComp
 
         lat.setText("Lat: " + Double.toString(location.getLatitude()));
         lon.setText("Long: " + Double.toString(location.getLongitude()));
-        temp.setText(decimalFormat.format(location.getTemperatura())+"°");
+        temp.setText(decimalFormat.format(location.getTemperature())+"°");
 
         String locationStatus = location.getStatus();
 

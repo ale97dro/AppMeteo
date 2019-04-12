@@ -27,7 +27,8 @@ public class MeteoFetcher {
         URL url = new URL(urlSpec);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-        try {
+        try
+        {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             InputStream in = connection.getInputStream();
 
@@ -44,53 +45,60 @@ public class MeteoFetcher {
             out.close();
 
             return out.toByteArray();
-        }
-//        catch (Exception e)
-//        {
-//            e.printStackTrace();
-//        }
-        finally {
+        } finally
+        {
             connection.disconnect();
         }
     }
 
     public Location fetchItem(Location location) {
 
-        Location retLocation=new Location();
-        String url=null;
-        if (location.getName().equals("Your position")){
-            try {
-                url = Uri.parse("https://api.openweathermap.org/data/2.5/weather")
-                        .buildUpon()
-                        .appendQueryParameter("lat",Double.toString(location.getLatitude()))
-                        .appendQueryParameter("lon",Double.toString(location.getLongitude()))
-                        .appendQueryParameter("appid",KEY)
-                        .build().toString();
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-        }else {
+        Location retLocation = new Location();
+        String url;
 
-            try {
-                url = Uri.parse("https://api.openweathermap.org/data/2.5/weather")
-                        .buildUpon()
-                        .appendQueryParameter("q",location.getName())
-                        .appendQueryParameter("appid",KEY)
-                        .build().toString();
+        if (location.getName().equals("Your position"))
+            url = createURLWithCoordinates(location);
+        else
+            url = createURLWithLocationName(location.getmName());
 
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-
-        }
-        try {
+        try
+        {
             String jsonString = getUrlString(url);
             JSONObject jsonObject = new JSONObject(jsonString);
             parseItem(retLocation, jsonObject);
-        }catch(Exception e){
-            e.printStackTrace();
         }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+
+            retLocation.setName("Error!");
+            retLocation.setLatitude(0.0);
+            retLocation.setLongitude(0.0);
+            retLocation.setTemperature(0.0 - 273.15);
+            retLocation.setStatus("The Rock");
+            retLocation.setIcon("therock");
+        }
+
         return retLocation;
+    }
+
+    private String createURLWithLocationName(String locationName)
+    {
+        return Uri.parse("https://api.openweathermap.org/data/2.5/weather")
+            .buildUpon()
+            .appendQueryParameter("q", locationName)
+            .appendQueryParameter("appid",KEY)
+            .build().toString();
+    }
+
+    private String createURLWithCoordinates(Location location)
+    {
+        return Uri.parse("https://api.openweathermap.org/data/2.5/weather")
+                .buildUpon()
+                .appendQueryParameter("lat",Double.toString(location.getLatitude()))
+                .appendQueryParameter("lon",Double.toString(location.getLongitude()))
+                .appendQueryParameter("appid",KEY)
+                .build().toString();
     }
 
     private void parseItem(Location location, JSONObject jsonObject)throws IOException, JSONException
@@ -101,7 +109,7 @@ public class MeteoFetcher {
 
         location.setLongitude(coord.getDouble("lon"));
         location.setLatitude(coord.getDouble("lat"));
-        location.setTemperatura(main.getDouble("temp")-273.15);
+        location.setTemperature(main.getDouble("temp")-273.15);
         location.setStatus(weatherArray.getJSONObject(0).getString("description"));
         location.setIcon(weatherArray.getJSONObject(0).getString("icon"));
 

@@ -56,7 +56,7 @@ Lo scopo del progetto è lo sviluppo di un'applicazione Android per visualizzare
 \item Possibilità di aggiungere nuove location manualmente (con popup, nuova schermata)
 \item Utilizzo del GPS per leggere la posizione corrente e mostrarla in lista
 \item Salvataggio delle location inserite dall'utente su database SQLite
-\item Controllo periodico (tramite Background Service) delle temperature; invio di notifiche se la temperatura locale scende / sale sopra una certa soglia
+\item Controllo periodico (tramite Background Service) delle temperature; invio di notifiche se la temperature locale scende / sale sopra una certa soglia
 \end{itemize}
 
 
@@ -68,10 +68,14 @@ Lo scopo del progetto è lo sviluppo di un'applicazione Android per visualizzare
 
 
 \section{Aggiunta di nuove location}
-\lipsum[13]
+Grazie alla presenza del bottone "+" presente nella toolbar dell'applicazione, è possibile accedere al dialog per l'inserimento di una nuova location di interesse. Dopo aver inserito il nome della location, è sufficiente premere il bottone "OK" per inserirla nel database.
 
 \section{Utilizzo GPS}
-\lipsum[13]
+Per l'uso del GPS, l'applicazione fa ricorso alla libreria SmartLocation per gestire in modo semplice e veloce il dispositivo. \`E necessario, prima di poter fare uso del GPS, implementare la richiesta all'utente dei permessi necessari per il suo utilizzo.
+
+Periodicamente, l'app chiede al GPS la posizione attuale: in questo modo, nel caso l'utente si muovesse, la sua posizione viene mantenuta aggiornata. Questo meccanismo è gestito da un listener che aggiorna la posizione dell'utente ogni 5 secondi.
+
+I dati ritornati dal GPS sono corrispondenti a latitudine e longitudine a cui il dispositivo si trova.
 
 \section{Persistenza delle locations}
 \lipsum[13]

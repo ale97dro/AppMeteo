@@ -8,7 +8,7 @@ public class Location implements Serializable {
     private String mName;
     private double latitude;
     private double longitude;
-    private double temperatura;
+    private double temperature;
     private String status;
     private String icon;
 
@@ -20,12 +20,12 @@ public class Location implements Serializable {
         this.icon = icon;
     }
 
-    public double getTemperatura() {
-        return temperatura;
+    public double getTemperature() {
+        return temperature;
     }
 
-    public void setTemperatura(double temperatura) {
-        this.temperatura = temperatura;
+    public void setTemperature(double temperature) {
+        this.temperature = temperature;
     }
 
     public String getStatus() {
