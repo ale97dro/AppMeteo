@@ -12,28 +12,9 @@ public class Location implements Serializable {
     private String status;
     private String icon;
 
-    public String getIcon() {
-        return icon;
-    }
 
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public double getTemperature() {
-        return temperature;
-    }
-
-    public void setTemperature(double temperature) {
-        this.temperature = temperature;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public Location() {
+        Id = UUID.randomUUID();
     }
 
     public Location(String name) {
@@ -45,6 +26,7 @@ public class Location implements Serializable {
         this.Id = id;
         this.name = name;
     }
+
 
     public UUID getId() {
         return Id;
@@ -78,7 +60,27 @@ public class Location implements Serializable {
         this.longitude = longitude;
     }
 
-    public Location() {
-        Id = UUID.randomUUID();
+    public double getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(double temperature) {
+        this.temperature = temperature;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 }

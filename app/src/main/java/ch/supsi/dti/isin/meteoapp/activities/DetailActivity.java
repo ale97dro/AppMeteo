@@ -65,7 +65,6 @@ public class DetailActivity extends SingleFragmentActivity implements OnTaskComp
         locationStatus = Character.toString(Character.toUpperCase(locationStatus.charAt(0))) + locationStatus.substring(1);
 
         desc.setText(locationStatus);
-        //desc.setText(location.getStatus());
 
         ImageView imageView = findViewById(R.id.detailImageView);
 

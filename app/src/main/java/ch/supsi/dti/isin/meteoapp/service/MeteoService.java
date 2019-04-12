@@ -18,6 +18,19 @@ import ch.supsi.dti.isin.meteoapp.model.Location;
 public class MeteoService extends IntentService {
     private static Location realLocation;
 
+    private static int TEMP_BOUND = 3;
+
+    public static void setTempBound(int tempBound)
+    {
+        TEMP_BOUND = tempBound;
+    }
+
+    public static int getTempBound()
+    {
+        return TEMP_BOUND;
+    }
+
+
     public MeteoService()
     {
         super("MeteoService");
@@ -41,7 +54,6 @@ public class MeteoService extends IntentService {
         }
     }
 
-
     @Override
     protected void onHandleIntent(Intent intent) {
         Log.i("timerTAG","receved an intent:"+realLocation.getLongitude());
@@ -49,7 +61,7 @@ public class MeteoService extends IntentService {
         MeteoFetcher meteoFetcher =new MeteoFetcher();
         Location locationReturned= meteoFetcher.fetchItem(realLocation);
 
-        if(locationReturned.getTemperature()>=3){
+        if(locationReturned.getTemperature() >= TEMP_BOUND){
             sendNotification(locationReturned);
         }
     }
@@ -66,7 +78,7 @@ public class MeteoService extends IntentService {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "default")
                 .setSmallIcon(R.drawable.sun)
                 .setContentTitle("MeteoApp")
-                .setContentText("Temperatura supera i 3°")
+                .setContentText("Temperatura supera i " + TEMP_BOUND + "°")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         mNotificationManager.notify(0, mBuilder.build());
