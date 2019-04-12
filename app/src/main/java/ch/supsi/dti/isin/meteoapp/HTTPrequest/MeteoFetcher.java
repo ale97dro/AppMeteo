@@ -59,7 +59,7 @@ public class MeteoFetcher {
         if (location.getName().equals("Your position"))
             url = createURLWithCoordinates(location);
         else
-            url = createURLWithLocationName(location.getmName());
+            url = createURLWithLocationName(location.getName());
 
         try
         {
@@ -69,8 +69,9 @@ public class MeteoFetcher {
         }
         catch(Exception e)
         {
-            e.printStackTrace();
+            //e.printStackTrace();
 
+            //Handle error: city was not found in OpenWeatherMaps
             retLocation.setName("Error!");
             retLocation.setLatitude(0.0);
             retLocation.setLongitude(0.0);
@@ -87,7 +88,7 @@ public class MeteoFetcher {
         return Uri.parse("https://api.openweathermap.org/data/2.5/weather")
             .buildUpon()
             .appendQueryParameter("q", locationName)
-            .appendQueryParameter("appid",KEY)
+            .appendQueryParameter("appid", KEY)
             .build().toString();
     }
 
@@ -97,7 +98,7 @@ public class MeteoFetcher {
                 .buildUpon()
                 .appendQueryParameter("lat",Double.toString(location.getLatitude()))
                 .appendQueryParameter("lon",Double.toString(location.getLongitude()))
-                .appendQueryParameter("appid",KEY)
+                .appendQueryParameter("appid", KEY)
                 .build().toString();
     }
 
@@ -109,7 +110,7 @@ public class MeteoFetcher {
 
         location.setLongitude(coord.getDouble("lon"));
         location.setLatitude(coord.getDouble("lat"));
-        location.setTemperature(main.getDouble("temp")-273.15);
+        location.setTemperature(main.getDouble("temp") - 273.15);
         location.setStatus(weatherArray.getJSONObject(0).getString("description"));
         location.setIcon(weatherArray.getJSONObject(0).getString("icon"));
 

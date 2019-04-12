@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class Location implements Serializable {
     private UUID Id;
-    private String mName;
+    private String name;
     private double latitude;
     private double longitude;
     private double temperature;
@@ -38,12 +38,12 @@ public class Location implements Serializable {
 
     public Location(String name) {
         Id = UUID.randomUUID();
-        this.mName = name;
+        this.name = name;
     }
 
     public Location(UUID id, String name) {
         this.Id = id;
-        this.mName = name;
+        this.name = name;
     }
 
     public UUID getId() {
@@ -55,19 +55,11 @@ public class Location implements Serializable {
     }
 
     public String getName() {
-        return mName;
+        return name;
     }
 
     public void setName(String name) {
-        mName = name;
-    }
-
-    public String getmName() {
-        return mName;
-    }
-
-    public void setmName(String mName) {
-        this.mName = mName;
+        this.name = name;
     }
 
     public double getLatitude() {

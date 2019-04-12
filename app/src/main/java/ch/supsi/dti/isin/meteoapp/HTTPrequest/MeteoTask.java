@@ -4,12 +4,12 @@ import android.os.AsyncTask;
 
 import ch.supsi.dti.isin.meteoapp.model.Location;
 
-public class MyTask extends AsyncTask<Location,Void, Location> {
+public class MeteoTask extends AsyncTask<Location,Void, Location> {
 
     private OnTaskCompleted listener;
     private Location location;
 
-    public MyTask(OnTaskCompleted listener, Location location) {
+    public MeteoTask(OnTaskCompleted listener, Location location) {
         this.location = location;
         this.listener = listener;
     }

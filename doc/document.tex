@@ -56,7 +56,7 @@ Lo scopo del progetto è lo sviluppo di un'applicazione Android per visualizzare
 \item Possibilità di aggiungere nuove location manualmente (con popup, nuova schermata)
 \item Utilizzo del GPS per leggere la posizione corrente e mostrarla in lista
 \item Salvataggio delle location inserite dall'utente su database SQLite
-\item Controllo periodico (tramite Background Service) delle temperature; invio di notifiche se la temperature locale scende / sale sopra una certa soglia
+\item Controllo periodico (tramite Background Service) delle temperature; invio di notifiche se la temperatura locale scende / sale sopra una certa soglia
 \end{itemize}
 
 
@@ -64,7 +64,14 @@ Lo scopo del progetto è lo sviluppo di un'applicazione Android per visualizzare
 
 
 \section{Applicazione di tipo List-Detail}
-\lipsum[13]
+
+Le applicazioni di tipo List-Detail costituiscono un formato molto popolare per quanto riguarda le applicazioni mobile: si compongono di solito di due schermate principali:
+
+\begin{itemize}
+\item List: una lista di entries costituita in questo caso dall'elenco delle location di cui l'utente vuole conoscere le informazioni meteo
+
+\item Detail: una schermata di dettaglio di una delle entries della schermata List: nel nostro caso, verranno mostrati Di solito è possibile raggiungerla eseguendo un tap sul nome nella lista della precedente schermata
+\end{itemize}
 
 
 \section{Aggiunta di nuove location}
