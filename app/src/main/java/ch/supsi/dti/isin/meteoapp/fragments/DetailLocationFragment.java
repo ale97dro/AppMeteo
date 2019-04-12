@@ -19,22 +19,6 @@ public class DetailLocationFragment extends Fragment {
     private static final String ARG_LOCATION = "location_obj";
 
     private Location mLocation;
-    private TextView mIdTextView;
-
-    private TextView cityNameTextView;
-    private TextView latitudeTextView;
-    private TextView longitudeTextView;
-
-    private ImageView imageView;
-
-//    public static DetailLocationFragment newInstance(UUID locationId) {
-//        Bundle args = new Bundle();
-//        args.putSerializable(ARG_LOCATION_ID, locationId);
-//
-//        DetailLocationFragment fragment = new DetailLocationFragment();
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
 
     public static DetailLocationFragment newInstance(Location location) {
         Bundle args = new Bundle();
@@ -47,7 +31,6 @@ public class DetailLocationFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //UUID locationId = (UUID) getArguments().getSerializable(ARG_LOCATION_ID);
         Location loc = (Location)getArguments().getSerializable(ARG_LOCATION);
         mLocation = LocationsHolder.get(getActivity()).getLocation(loc.getId());
     }
@@ -56,22 +39,20 @@ public class DetailLocationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_detail_location, container, false);
 
-        mIdTextView = v.findViewById(R.id.id_textView);
+        TextView mIdTextView = v.findViewById(R.id.id_textView);
         mIdTextView.setText(mLocation.getId().toString());
 
-        cityNameTextView = v.findViewById(R.id.displayedCityName);
+        TextView cityNameTextView = v.findViewById(R.id.displayedCityName);
         cityNameTextView.setText(mLocation.getName());
 
-        latitudeTextView = v.findViewById(R.id.displayedLatitude);
+        TextView latitudeTextView = v.findViewById(R.id.displayedLatitude);
         latitudeTextView.setText(Double.toString(mLocation.getLatitude()));
 
-        longitudeTextView = v.findViewById(R.id.displayedLongitude);
+        TextView longitudeTextView = v.findViewById(R.id.displayedLongitude);
         longitudeTextView.setText(Double.toString(mLocation.getLongitude()));
 
-        imageView = v.findViewById(R.id.detailImageView);
+        ImageView imageView = v.findViewById(R.id.detailImageView);
         imageView.setImageResource(R.drawable.therock);
-
-        //this.getView().setBackground(getResources().getDrawable(Integer.parseInt("drawable/clearSky.jpg")));
 
         return v;
     }

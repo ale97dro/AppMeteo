@@ -1,0 +1,94 @@
+%% Esempio per lo stile supsi
+\documentclass[twoside]{supsistudent} 
+
+% per settare noindent
+\setlength{\parindent}{0pt}
+
+
+% Crea un capitolo senza numerazione che pero` appare nell'indice %
+\newcommand{\problemchapter}[1]{%
+  \chapter*{#1}%
+  \addcontentsline{toc}{chapter}{#1}%
+\markboth{#1}{#1}
+}
+
+% Numerazione delle appendici secondo norma
+\addto\appendix{
+\renewcommand{\thesection}{\Alph{chapter}.\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}}
+
+\setcounter{secnumdepth}{5} 	%per avere più livelli nei titoli
+\setcounter{tocdepth}{5}		%per avere più livelli nell'indice
+
+
+\titolo{Progetto Android - Meteo App}
+\studente{Alessandro Bianchi \vspace{1em}\\ Maura Clerici \vspace{1em}\\ Zyril Errol Gatchalian}
+\relatore{-}
+\correlatore{-}
+\committente{Vanni Galli}
+\corso{Ingegneria Informatica}
+\modulo{M02074 - Sviluppo di applicazioni mobile}
+\anno{2019}
+
+
+
+\begin{document}
+
+\pagenumbering{alph}
+\maketitle
+\onehalfspacing
+\frontmatter
+
+
+\pagenumbering{roman}
+\tableofcontents
+
+
+\newpage
+\mainmatter
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\chapter{Requisiti}
+Lo scopo del progetto è lo sviluppo di un'applicazione Android per visualizzare i dati meteo di diverse località, con i seguenti requisiti:
+\begin{itemize}
+\item Applicazione di tipo List - Detail
+\item Possibilità di aggiungere nuove location manualmente (con popup, nuova schermata)
+\item Utilizzo del GPS per leggere la posizione corrente e mostrarla in lista
+\item Salvataggio delle location inserite dall'utente su database SQLite
+\item Controllo periodico (tramite Background Service) delle temperature; invio di notifiche se la temperatura locale scende / sale sopra una certa soglia
+\end{itemize}
+
+
+\chapter{Implementazione}
+
+
+\section{Applicazione di tipo List-Detail}
+
+Le applicazioni di tipo List-Detail costituiscono un formato molto popolare per quanto riguarda le applicazioni mobile: si compongono di solito di due schermate principali:
+
+\begin{itemize}
+\item List: una lista di entries costituita in questo caso dall'elenco delle location di cui l'utente vuole conoscere le informazioni meteo
+
+\item Detail: una schermata di dettaglio di una delle entries della schermata List: nel nostro caso, verranno mostrati Di solito è possibile raggiungerla eseguendo un tap sul nome nella lista della precedente schermata
+\end{itemize}
+
+
+\section{Aggiunta di nuove location}
+Grazie alla presenza del bottone "+" presente nella toolbar dell'applicazione, è possibile accedere al dialog per l'inserimento di una nuova location di interesse. Dopo aver inserito il nome della location, è sufficiente premere il bottone "OK" per inserirla nel database.
+
+\section{Utilizzo GPS}
+Per l'uso del GPS, l'applicazione fa ricorso alla libreria SmartLocation per gestire in modo semplice e veloce il dispositivo. \`E necessario, prima di poter fare uso del GPS, implementare la richiesta all'utente dei permessi necessari per il suo utilizzo.
+
+Periodicamente, l'app chiede al GPS la posizione attuale: in questo modo, nel caso l'utente si muovesse, la sua posizione viene mantenuta aggiornata. Questo meccanismo è gestito da un listener che aggiorna la posizione dell'utente ogni 5 secondi.
+
+I dati ritornati dal GPS sono corrispondenti a latitudine e longitudine a cui il dispositivo si trova.
+
+\section{Persistenza delle locations}
+\lipsum[13]
+
+\section{Controllo periodico delle temperature e notifiche}
+\lipsum[13]
+
+
+\end{document}

@@ -5,46 +5,28 @@ import java.util.UUID;
 
 public class Location implements Serializable {
     private UUID Id;
-    private String mName;
+    private String name;
     private double latitude;
     private double longitude;
-    private double temperatura;
+    private double temperature;
     private String status;
     private String icon;
 
-    public String getIcon() {
-        return icon;
-    }
 
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public double getTemperatura() {
-        return temperatura;
-    }
-
-    public void setTemperatura(double temperatura) {
-        this.temperatura = temperatura;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public Location() {
+        Id = UUID.randomUUID();
     }
 
     public Location(String name) {
         Id = UUID.randomUUID();
-        this.mName = name;
+        this.name = name;
     }
 
     public Location(UUID id, String name) {
         this.Id = id;
-        this.mName = name;
+        this.name = name;
     }
+
 
     public UUID getId() {
         return Id;
@@ -55,19 +37,11 @@ public class Location implements Serializable {
     }
 
     public String getName() {
-        return mName;
+        return name;
     }
 
     public void setName(String name) {
-        mName = name;
-    }
-
-    public String getmName() {
-        return mName;
-    }
-
-    public void setmName(String mName) {
-        this.mName = mName;
+        this.name = name;
     }
 
     public double getLatitude() {
@@ -86,7 +60,27 @@ public class Location implements Serializable {
         this.longitude = longitude;
     }
 
-    public Location() {
-        Id = UUID.randomUUID();
+    public double getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(double temperature) {
+        this.temperature = temperature;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 }
