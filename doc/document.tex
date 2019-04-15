@@ -90,5 +90,28 @@ I dati ritornati dal GPS sono corrispondenti a latitudine e longitudine a cui il
 \section{Controllo periodico delle temperature e notifiche}
 \lipsum[13]
 
+\section{Invio richieste HTTP}
+Le richieste HTTP vengono mandate ogni minuto per ricevere aggiornamenti sulla temperatura della posizione corrente in modo da inviare una notifica nel caso in cui
+la temperatura supera un certo valore. Inoltre le richieste vengono mandati quando l'applicazione richiede (si preme su una citta o posizione corrente) le condizioni
+atmosferiche di una delle città presenti nella lista.\\
+Per l'invio di richieste http abbiamo dovuto apportare diverse modifiche:
+\begin{itemize}
+  \item aggiungere i permessi nel manifest
+  \item creare le classi apposite alle richieste asincrone
+\end{itemize}
+Per poter fare la richiesta ci siamo basati maggiormente sulla classe MeteoFetcher che si occupa di:
+\begin{itemize}
+  \item tenere la chiave per poter fare le richieste (ottenuta da una previa registrazione al sito OpenWeather)
+  \item aprire la connessione verso l'url di OpenWeather
+  \item costruire il messaggio di richiesta
+  \item prelevare i dati di risposta con uno stream di byte
+  \item convalidazione dei dati ricevuti
+  \item parsare il messaggio json ritornato dal sito
+  \item prelevare i dati parsati e metterli in un oggetto model Location termporaneo
+\end{itemize}
+
+Questa classe è gestita da un'altra classe chiamata MeteoTask in modo da far partire in background la richiesta affichè l'applicazione
+non si blocchi fino alla ricezione della risposta da parte del sito.
+
 
 \end{document}
