@@ -12,6 +12,9 @@
 \markboth{#1}{#1}
 }
 
+%package per il simbolo dei gradi
+\usepackage{siunitx}
+
 % Numerazione delle appendici secondo norma
 \addto\appendix{
 \renewcommand{\thesection}{\Alph{chapter}.\arabic{section}}
@@ -85,33 +88,26 @@ Periodicamente, l'app chiede al GPS la posizione attuale: in questo modo, nel ca
 I dati ritornati dal GPS sono corrispondenti a latitudine e longitudine a cui il dispositivo si trova.
 
 \section{Persistenza delle locations}
-\lipsum[13]
+Le informazioni da memorizzare per l'applicazione sono poche: è infatti sufficiente persistere solamente il nome della locations inserite dall'utente.
+Le informazioni vengono caricate nella schermata principale all'avvio dell'applicazione; quando una nuova location viene inserita, essa viene salvata nel database e la lista viene aggiornata in modo da posizionare la nuova città.
+
+All'avvio dell'applicazione, il database è già caricato con alcune città di default.
+\\\\
+Il database utilizzato è SQLite.
 
 \section{Controllo periodico delle temperature e notifiche}
-\lipsum[13]
-
-\section{Invio richieste HTTP}
-Le richieste HTTP vengono mandate ogni minuto per ricevere aggiornamenti sulla temperatura della posizione corrente in modo da inviare una notifica nel caso in cui
-la temperatura supera un certo valore. Inoltre le richieste vengono mandati quando l'applicazione richiede (si preme su una citta o posizione corrente) le condizioni
-atmosferiche di una delle città presenti nella lista.\\
-Per l'invio di richieste http abbiamo dovuto apportare diverse modifiche:
+Quando l'utente decide di visualizzare i dettagli di una località, l'applicazione necessita di caricare dati in tempo reale per visualizzare la temperatura e le condizioni meteo del luogo. Per fare questo, sfrutta delle richieste HTTP eseguite in modo asincrono.
+\\\\
+Le richieste vengono effettuate a OpenWeatherMap (previo ottenimento di una key): sono effettuate due tipi di richieste:
 \begin{itemize}
-  \item aggiungere i permessi nel manifest
-  \item creare le classi apposite alle richieste asincrone
-\end{itemize}
-Per poter fare la richiesta ci siamo basati maggiormente sulla classe MeteoFetcher che si occupa di:
-\begin{itemize}
-  \item tenere la chiave per poter fare le richieste (ottenuta da una previa registrazione al sito OpenWeather)
-  \item aprire la connessione verso l'url di OpenWeather
-  \item costruire il messaggio di richiesta
-  \item prelevare i dati di risposta con uno stream di byte
-  \item convalidazione dei dati ricevuti
-  \item parsare il messaggio json ritornato dal sito
-  \item prelevare i dati parsati e metterli in un oggetto model Location termporaneo
+	\item Nome della location: nel caso l'utente inserisca il nome di un luogo, questo verrà utilizzato come "chiave" per la ricerca
+	\item Coordinate: nel caso l'utente voglia conoscere i dettagli della propria posizione, verrà eseguita una richiesta con le coordinate fornite dal GPS
 \end{itemize}
 
-Questa classe è gestita da un'altra classe chiamata MeteoTask in modo da far partire in background la richiesta affichè l'applicazione
-non si blocchi fino alla ricezione della risposta da parte del sito.
+Nel caso la richiesta non vada a buon fine (ad esempio località non esistente o servizio non disponibile) verrà visualizzata, come schermata di dettaglio, un template standard che informerà l'utente dell'errore.
 
+L'applicazione prevede anche un sistema di notifiche: sfruttando quanto già scritto per la richiesta di temperatura e meteo, ogni minuto viene eseguita una richiesta per la posizione attuale dell'utente: se la temperatura del luogo sale sopra una certa soglia (ora impostata a \ang{3}).
+
+Come già detto in precedenza, le richieste avvengono in modo asincrono e in background: in questo modo, in caso di blocchi o ritardi, l'utente può continuare ad utilizzare l'applicazione normalmente.
 
 \end{document}
