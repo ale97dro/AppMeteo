@@ -71,14 +71,14 @@ Lo scopo del progetto è lo sviluppo di un'applicazione Android per visualizzare
 Le applicazioni di tipo List-Detail costituiscono un formato molto popolare per quanto riguarda le applicazioni mobile: si compongono di solito di due schermate principali:
 
 \begin{itemize}
-\item List: una lista di entries costituita in questo caso dall'elenco delle location di cui l'utente vuole conoscere le informazioni meteo
+\item List: una lista di entries costituita in questo caso dall'elenco delle locations di cui l'utente vuole conoscere le informazioni meteo
 
-\item Detail: una schermata di dettaglio di una delle entries della schermata List: nel nostro caso, verranno mostrati Di solito è possibile raggiungerla eseguendo un tap sul nome nella lista della precedente schermata
+\item Detail: una schermata di dettaglio di una delle entries della schermata List: nel nostro caso, verranno mostrati il nome della location selezionata, la relativa temperatura e la relativa icona meteorologica. Di solito è possibile raggiungerla eseguendo un tap sul nome nella lista della precedente schermata
 \end{itemize}
 
 
 \section{Aggiunta di nuove location}
-Grazie alla presenza del bottone "+" presente nella toolbar dell'applicazione, è possibile accedere al dialog per l'inserimento di una nuova location di interesse. Dopo aver inserito il nome della location, è sufficiente premere il bottone "OK" per inserirla nel database.
+Grazie alla presenza del bottone "+" nella toolbar dell'applicazione, è possibile accedere al dialog per l'inserimento di una nuova location di interesse. Dopo aver inserito il nome della location, è sufficiente premere il bottone "OK" per inserirla nel database.
 
 \section{Utilizzo GPS}
 Per l'uso del GPS, l'applicazione fa ricorso alla libreria SmartLocation per gestire in modo semplice e veloce il dispositivo. \`E necessario, prima di poter fare uso del GPS, implementare la richiesta all'utente dei permessi necessari per il suo utilizzo.
@@ -88,8 +88,8 @@ Periodicamente, l'app chiede al GPS la posizione attuale: in questo modo, nel ca
 I dati ritornati dal GPS sono corrispondenti a latitudine e longitudine a cui il dispositivo si trova.
 
 \section{Persistenza delle locations}
-Le informazioni da memorizzare per l'applicazione sono poche: è infatti sufficiente persistere solamente il nome della locations inserite dall'utente.
-Le informazioni vengono caricate nella schermata principale all'avvio dell'applicazione; quando una nuova location viene inserita, essa viene salvata nel database e la lista viene aggiornata in modo da posizionare la nuova città.
+Le informazioni da memorizzare per l'applicazione sono poche: è infatti sufficiente persistere solamente il nome delle locations inserite dall'utente.
+Le informazioni vengono caricate nella schermata principale all'avvio dell'applicazione; quando una nuova location viene inserita, essa viene salvata nel database e la lista viene aggiornata in modo da posizionare la nuova città e riordinata in ordine alfabetico.
 
 All'avvio dell'applicazione, il database è già caricato con alcune città di default.
 \\\\
@@ -106,7 +106,7 @@ Le richieste vengono effettuate a OpenWeatherMap (previo ottenimento di una key)
 
 Nel caso la richiesta non vada a buon fine (ad esempio località non esistente o servizio non disponibile) verrà visualizzata, come schermata di dettaglio, un template standard che informerà l'utente dell'errore.
 
-L'applicazione prevede anche un sistema di notifiche: sfruttando quanto già scritto per la richiesta di temperatura e meteo, ogni minuto viene eseguita una richiesta per la posizione attuale dell'utente: se la temperatura del luogo sale sopra una certa soglia (ora impostata a \ang{3}).
+L'applicazione prevede anche un sistema di notifiche: sfruttando quanto già scritto per la richiesta di temperatura e meteo, ogni minuto viene eseguita una richiesta per la posizione attuale dell'utente: se la temperatura del luogo sale sopra una certa soglia (ora impostata a \ang{3}), viene visualizzata una notifica.
 
 Come già detto in precedenza, le richieste avvengono in modo asincrono e in background: in questo modo, in caso di blocchi o ritardi, l'utente può continuare ad utilizzare l'applicazione normalmente.
 
